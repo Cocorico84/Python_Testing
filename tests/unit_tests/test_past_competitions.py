@@ -1,4 +1,3 @@
-from werkzeug.utils import redirect
 from tests.base import BaseTest
 
 
