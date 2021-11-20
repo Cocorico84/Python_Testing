@@ -21,3 +21,7 @@ def test_login_with_unknown_email(client):
 def test_login_with_known_email(client):
     response = client.post('/showSummary', data={"email": "john@simplylift.co"}, follow_redirects=True)
     assert response.status_code == 200
+
+def test_logout(client):
+    response = client.get('/logout', follow_redirects=True)
+    assert response.status_code == 200
