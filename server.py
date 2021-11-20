@@ -21,7 +21,7 @@ app.secret_key = 'something_special'
 
 competitions = loadCompetitions()
 clubs = loadClubs()
-
+current_competitions = [c['name'] for c in competitions if datetime.strptime(c['date'], '%Y-%m-%d %H:%M:%S') > datetime.now()]
 
 @app.route('/')
 def index():
@@ -36,8 +36,7 @@ def showSummary():
     except IndexError:
         flash("Your club is not registered!")
         return redirect(url_for('index'))
-    current_competitions = [c for c in competitions if datetime.strptime(c['date'], '%Y-%m-%d %H:%M:%S') > datetime.now()]
-    return render_template('welcome.html', club=club, competitions=current_competitions)
+    return render_template('welcome.html', club=club, competitions=competitions, current_competitions=current_competitions)
 
 
 @app.route('/book/<competition>/<club>')
@@ -49,7 +48,7 @@ def book(competition, club):
             return render_template('booking.html', club=foundClub, competition=foundCompetition)
     except IndexError:
         flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, current_competitions=current_competitions)
 
 
 @app.route('/purchasePlaces', methods=['POST'])
