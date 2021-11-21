@@ -21,11 +21,13 @@ app.secret_key = 'something_special'
 
 competitions = loadCompetitions()
 clubs = loadClubs()
-current_competitions = [c['name'] for c in competitions if datetime.strptime(c['date'], '%Y-%m-%d %H:%M:%S') > datetime.now()]
+current_competitions = [c['name'] for c in competitions if datetime.strptime(
+    c['date'], '%Y-%m-%d %H:%M:%S') > datetime.now()]
+
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', clubs=clubs)
 
 
 @app.route('/showSummary', methods=['POST'])
@@ -43,7 +45,8 @@ def showSummary():
 def book(competition, club):
     try:
         foundClub = [c for c in clubs if c['name'] == club][0]
-        foundCompetition = [c for c in competitions if c['name'] == competition and datetime.strptime(c['date'], '%Y-%m-%d %H:%M:%S') > datetime.now()][0]
+        foundCompetition = [c for c in competitions if c['name'] == competition and datetime.strptime(
+            c['date'], '%Y-%m-%d %H:%M:%S') > datetime.now()][0]
         if foundClub and foundCompetition:
             return render_template('booking.html', club=foundClub, competition=foundCompetition)
     except IndexError:
@@ -65,13 +68,11 @@ def purchasePlaces():
         flash('Not enough points to buy places!')
     else:
         club['points'] = int(club['points']) - placesRequired
-        competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
+        competition['numberOfPlaces'] = int(
+            competition['numberOfPlaces']) - placesRequired
         flash('Great-booking complete!')
         return render_template('welcome.html', club=club, competitions=competitions, current_competitions=current_competitions)
     return render_template('booking.html', club=club, competition=competition)
-
-
-# TODO: Add route for points display
 
 
 @app.route('/logout')
