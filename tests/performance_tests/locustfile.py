@@ -1,11 +1,15 @@
-from locust import HttpUser, task 
+from locust import HttpUser, task
+
 
 class ProjectPerfTest(HttpUser):
     @task
     def home(self):
-        response = self.client.get("/")
-        
-    
+        self.client.get("/")
+
     @task
     def login(self):
-        response = self.client.post("/showSummary", data={"email": "john@simplylift.co"})
+        self.client.post("/showSummary", data={"email": "john@simplylift.co"})
+
+    @task
+    def logout(self):
+        self.client.get('/logout')
