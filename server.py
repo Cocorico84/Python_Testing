@@ -62,7 +62,7 @@ def purchasePlaces():
     elif placesRequired > 12:
         flash('You cannot buy more than 12 places!')
     elif int(club['points']) - placesRequired < 0:
-        flash(f"Not enough points to buy places!")
+        flash('Not enough points to buy places!')
     else:
         club['points'] = int(club['points']) - placesRequired
         competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
