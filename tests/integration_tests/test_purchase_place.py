@@ -10,3 +10,4 @@ class PurchaseTest(BaseTest):
         assert response.status_code == 200
         assert b'You cannot buy more than your available places' not in response.data
         assert b'You cannot buy more than 12 places!' not in response.data
+        assert b"Something went wrong-please try again" not in response.data
