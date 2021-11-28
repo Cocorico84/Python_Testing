@@ -9,3 +9,4 @@ class PurchaseTest(BaseTest):
         response = self.app.post('/purchasePlaces', data={"club": "Simply Lift", "competition": "Spring Festival", "places": 3}, follow_redirects=True)
         assert response.status_code == 200
         assert b'You cannot buy more than your available places' not in response.data
+        assert b'You cannot buy more than 12 places!' not in response.data
