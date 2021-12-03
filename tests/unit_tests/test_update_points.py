@@ -32,7 +32,7 @@ def test_update_clubs_and_competitions(client, competition_data, club_data):
     response = client.post('/purchasePlaces', data={
                                 "club": "Simply Lift", "competition": "Spring Festival", "places": 3}, follow_redirects=True)
     assert response.status_code == 200
-    assert server.clubs[0]['points'] == 10
+    assert server.clubs[0]['points'] == 4
     assert server.competitions[0]['numberOfPlaces'] == 22
 
 
